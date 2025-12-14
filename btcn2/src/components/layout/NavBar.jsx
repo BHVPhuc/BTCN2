@@ -3,7 +3,7 @@ import { House } from 'lucide-react';
 export default function NavBar() {
 
     return (
-        <div className="w-full max-w-[1200px] bg-[#d3e0fc] border border-[#c2d4e9] h-14 rounded-[10px] flex
+        <div className="w-full max-w-[1200px] bg-[#d3e0fc] border border-[#c2d4e9] h-15 rounded-[10px] flex
             items-center justify-between px-6 my-1">
             <div className='cursor-pointer'>
                 <House />               
