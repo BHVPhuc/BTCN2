@@ -3,14 +3,14 @@ import { House } from 'lucide-react';
 export default function NavBar() {
 
     return (
-        <div className="w-full max-w-[1200px] bg-[#d3e0fc] border border-[#c2d4e9] h-15 rounded-[10px] flex
+        <div className="w-full max-w-[1200px] bg-[#d3e0fc] dark:bg-[#0b1b39] border border-[#c2d4e9] dark:border-[#122d5f] h-15 rounded-[10px] flex
             items-center justify-between px-6 my-1">
             <div className='cursor-pointer'>
-                <House />               
+                <House className="dark:text-white"/>               
             </div>
             <div className='flex'>
                 <input type="text" id="first_name" 
-                    className="bg-white rounded-[10px] border border-default-medium text-heading text-sm rounded-base focus:border-brand block w-full px-3 py-2 shadow-xs placeholder:text-body mr-3" 
+                    className="bg-white dark:bg-background rounded-[10px] border border-default-medium text-heading text-sm rounded-base focus:border-brand block w-full px-3 py-2 shadow-xs placeholder:text-body mr-3" 
                     placeholder="Search" />
                 <button
                     type='button'

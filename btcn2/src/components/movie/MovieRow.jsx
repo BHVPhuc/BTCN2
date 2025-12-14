@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export default function MovieRow({ title }) {
     return (
         <div className="w-full h-full flex flex-col p-2">
-            <h3 className="text-lg font-bold text-[#4b282d] mb-1">{title}</h3>
+            <h3 className="text-lg font-bold text-[#4b282d] dark:text-white mb-1">{title}</h3>
 
             <div className="flex-1 flex items-center relative">
                 {/* Left Arrow */}
