@@ -8,7 +8,7 @@ export default function MainLayout() {
     <div className='flex flex-col min-h-screen items-center p-1'>
       <Header />
       <NavBar />
-      <div className='flex-1 w-full max-w-[1200px] bg-amber-400 flex flex-col'>
+      <div className='flex-1 w-full max-w-[1200px] flex flex-col'>
         <Outlet />
       </div>
       <Footer />
