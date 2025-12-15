@@ -24,10 +24,26 @@ export default function MovieDetailPage() {
     });
     const [loading, setLoading] = useState(true);
     const [addingFavorite, setAddingFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
     const { isAuthenticated, token } = useAuth();
 
-    const handleAddToFavorites = async () => {
+    useEffect(() => {
+        const checkFavoriteStatus = async () => {
+            if (isAuthenticated && token) {
+                try {
+                    const favorites = await movieService.getFavorites(token);
+                    const isFav = favorites.some(fav => fav.id === id || fav.id === Number(id)); // API might return string or number
+                    setIsFavorite(isFav);
+                } catch (e) {
+                    console.error("Failed to check favorite status", e);
+                }
+            }
+        };
+        checkFavoriteStatus();
+    }, [isAuthenticated, token, id]);
+
+    const handleToggleFavorite = async () => {
         if (!isAuthenticated) {
             navigate("/login");
             return;
@@ -35,10 +51,17 @@ export default function MovieDetailPage() {
         if (!token) return;
         setAddingFavorite(true);
         try {
-            await movieService.addFavorite(id, token);
-            alert("Movie added to favorites!");
+            if (isFavorite) {
+                await movieService.removeFavorite(id, token);
+                setIsFavorite(false);
+                // alert("Movie removed from favorites");
+            } else {
+                await movieService.addFavorite(id, token);
+                setIsFavorite(true);
+                // alert("Movie added to favorites!");
+            }
         } catch (error) {
-            console.error("Failed to add favorite", error);
+            console.error("Failed to update favorite", error);
             alert(error.message);
         } finally {
             setAddingFavorite(false);
@@ -91,14 +114,20 @@ export default function MovieDetailPage() {
                     className="rounded-xl shadow-lg w-full"
                 />
                 <Button
-                    onClick={handleAddToFavorites}
+                    onClick={handleToggleFavorite}
                     disabled={addingFavorite}
                     variant="ghost"
                     size="icon"
                     className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full h-10 w-10"
-                    title="Add to Favorites"
+                    title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                 >
-                    {addingFavorite ? <Loader2 className="h-5 w-5 animate-spin" /> : <Heart className="h-5 w-5" />}
+                    {addingFavorite ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                        <Heart
+                            className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`}
+                        />
+                    )}
                 </Button>
             </div>
 

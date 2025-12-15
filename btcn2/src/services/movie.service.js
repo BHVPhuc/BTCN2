@@ -111,5 +111,26 @@ export const movieService = {
       throw new Error("Failed to fetch favorites");
     }
     return res.json();
+  },
+
+  async removeFavorite(movieId, token) {
+    const res = await fetch(`${API_BASE_URL}/users/favorites/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        ...headers,
+        "Authorization": `Bearer ${token}`
+      },
+    });
+
+    if (!res.ok) {
+      let errorMessage = "Failed to remove favorite";
+      try {
+        const errorData = await res.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch (e) { /* ignore */ }
+      throw new Error(errorMessage);
+    }
+
+    return res.json();
   }
 };
