@@ -35,4 +35,30 @@ export const movieService = {
     if (!res.ok) throw new Error("Failed to fetch movie detail");
     return res.json();
   },
+  
+  async searchMovies({
+    q,
+    title,
+    genre,
+    person,
+    page = 1,
+    limit = 10,} = {}) {
+    const params = new URLSearchParams();
+
+    if (q) params.append("q", q);
+    if (title) params.append("title", title);
+    if (genre) params.append("genre", genre);
+    if (person) params.append("person", person);
+    params.append("page", page);
+    params.append("limit", limit);
+
+    const res = await fetch(
+      `${API_BASE_URL}/movies/search?${params.toString()}`,
+      { headers }
+    );
+
+    if (!res.ok) throw new Error("Search movies failed");
+    return res.json();
+  }
+
 };
