@@ -33,7 +33,7 @@ export default function MainContent() {
                 <MovieRow title="Most Popular" movies={popular}/>
             </div>
             <div className="row-span-1">
-                <MovieRow title="Top Rating" movies={[]}/>
+                <MovieRow title="Top Rating" movies={topRated}/>
             </div>
         </div>
     )
