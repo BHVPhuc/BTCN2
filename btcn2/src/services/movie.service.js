@@ -97,5 +97,19 @@ export const movieService = {
     }
 
     return res.json();
+  },
+
+  async getFavorites(token) {
+    const res = await fetch(`${API_BASE_URL}/users/favorites`, {
+      headers: {
+        ...headers,
+        "Authorization": `Bearer ${token}`
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch favorites");
+    }
+    return res.json();
   }
 };
