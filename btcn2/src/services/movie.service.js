@@ -69,7 +69,7 @@ export const movieService = {
     return res.json();
   },
 
-  async getReviews(movieId, { page = 1, limit = 10, sort = "newest" } = {}) {
+  async getReviews(movieId, { page = 1, limit = 5, sort = "newest" } = {}) {
     const res = await fetch(
       `${API_BASE_URL}/movies/${movieId}/reviews?page=${page}&limit=${limit}&sort=${sort}`,
       { headers }

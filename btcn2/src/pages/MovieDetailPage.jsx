@@ -2,21 +2,44 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { movieService } from "@/services/movie.service";
 import { useNavigate } from "react-router-dom";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function MovieDetailPage() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const [pagination, setPagination] = useState({
+        current_page: 1,
+        total_pages: 1,
+    });
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    const fetchReviews = async (page) => {
+        try {
+            const res = await movieService.getReviews(id, { page });
+            setReviews(res.data || []);
+            setPagination(
+                res.pagination || { current_page: 1, total_pages: 1 }
+            );
+        } catch (error) {
+            console.error("Failed to fetch reviews", error);
+        }
+    };
 
     useEffect(() => {
         const fetchDetail = async () => {
             try {
                 const res = await movieService.getDetail(id);
                 setMovie(res);
-                const reviewsRes = await movieService.getReviews(id);
-                setReviews(reviewsRes.data || []);
+                await fetchReviews(1);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -26,6 +49,12 @@ export default function MovieDetailPage() {
 
         fetchDetail();
     }, [id]);
+
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= pagination.total_pages) {
+            fetchReviews(page);
+        }
+    };
 
     if (loading) return <div className="p-6">Loading...</div>;
     if (!movie) return <div className="p-6">Movie not found</div>;
@@ -118,18 +147,81 @@ export default function MovieDetailPage() {
                         {reviews.map((review, index) => (
                             <div key={index} className="border-b pb-4">
                                 <div className="flex gap-4 items-center">
-                                    <p className="font-semibold">User: {review.username}</p>
+                                    <p className="font-semibold">
+                                        User: {review.username}
+                                    </p>
                                     <p className="text-sm text-gray-500">
                                         Rating: {review.rate} / 10.0
                                     </p>
                                 </div>
-                                <p className="text-sm italic text-semibold">Title: {review.title}</p>
+                                <p className="text-sm italic text-semibold">
+                                    Title: {review.title}
+                                </p>
                                 <p className="mt-2 text-sm leading-relaxed">
                                     {review.content}
                                 </p>
                             </div>
                         ))}
                     </div>
+
+                    {/* PAGINATION */}
+                    {pagination.total_pages > 1 && (
+                        <div className="mt-6">
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious
+                                            onClick={() =>
+                                                handlePageChange(
+                                                    pagination.current_page - 1
+                                                )
+                                            }
+                                            className={
+                                                pagination.current_page === 1
+                                                    ? "pointer-events-none opacity-50"
+                                                    : "cursor-pointer"
+                                            }
+                                        />
+                                    </PaginationItem>
+
+                                    {Array.from({
+                                        length: pagination.total_pages,
+                                    }).map((_, i) => (
+                                        <PaginationItem key={i}>
+                                            <PaginationLink
+                                                isActive={
+                                                    pagination.current_page ===
+                                                    i + 1
+                                                }
+                                                onClick={() =>
+                                                    handlePageChange(i + 1)
+                                                }
+                                                className="cursor-pointer"
+                                            >
+                                                {i + 1}
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    ))}
+
+                                    <PaginationItem>
+                                        <PaginationNext
+                                            onClick={() =>
+                                                handlePageChange(
+                                                    pagination.current_page + 1
+                                                )
+                                            }
+                                            className={
+                                                pagination.current_page ===
+                                                    pagination.total_pages
+                                                    ? "pointer-events-none opacity-50"
+                                                    : "cursor-pointer"
+                                            }
+                                        />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
