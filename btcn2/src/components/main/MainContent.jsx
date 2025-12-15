@@ -2,6 +2,7 @@ import FeaturedMovie from "../movie/FeaturedMovie";
 import MovieRow from "../movie/MovieRow";
 import { movieService } from "../../services/movie.service";
 import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function MainContent() {
   const [popular, setPopular] = useState([]);
@@ -52,8 +53,11 @@ export default function MainContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <p className="text-gray-500 text-2xl">Loading movies...</p>
+      <div className="flex flex-col items-center justify-center h-[60vh]">
+        <Loader2 className="h-12 w-12 animate-spin text-blue-600" />
+        <p className="mt-4 text-gray-500 text-lg font-medium animate-pulse">
+          Loading movies...
+        </p>
       </div>
     );
   }
