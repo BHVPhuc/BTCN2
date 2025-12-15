@@ -27,7 +27,8 @@ export default function MainContent() {
 
         fetchMovies();
     }, []);
-
+    // console.log(featured[0].year);
+    console.log(featured);
     return (
         <div className="flex-1 grid grid-rows-4 gap-2 py-6 max-w-full">
             <div className="row-span-2">

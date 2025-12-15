@@ -26,6 +26,16 @@ export default function FeaturedMovie({ movies = [] }) {
             <ChevronLeft size={36} />
         </button>
 
+        {/* SLIDE BAR */}
+        <div className="flex justify-center gap-2 mt-2 mb-1 absolute top-180 z-50 left-1/2 transform -translate-x-1/2">
+        {movies.map((_, i) => (
+            <span
+            key={i}
+            className={`w-6 h-1.5 rounded ${i === index ? "bg-red-500" : "bg-gray-300"}`}
+            />
+        ))}
+        </div>
+
         {/* VIEWPORT */}
         <div className="w-full h-full overflow-hidden">
 
@@ -42,14 +52,43 @@ export default function FeaturedMovie({ movies = [] }) {
                 key={movie.id}
                 className="w-full h-full flex items-center justify-center"
                 >
-                <div className="h-[85%] w-[500px] aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
+                    <div className="relative h-[85%] w-[500px] aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
+
+                    {/* IMAGE */}
                     <img
-                    src={movie.image}
-                    alt={movie.title}
-                    className="w-full h-full object-cover"
+                        src={movie.image}
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
                     />
+
+                    {/* OVERLAY INFO */}
+                    <div className="absolute bottom-0 left-0 right-0
+                                    bg-gradient-to-t from-black/80 via-black/40 to-transparent
+                                    p-4 text-white">
+
+                        {/* TITLE */}
+                        <h3 className="text-lg font-bold leading-tight text-center">
+                            {movie.title}
+                        </h3>
+
+                        {/* YEAR */}
+                        {movie.year && (
+                        <p className="text-sm text-gray-300 text-center mt-1">
+                            {movie.year}
+                        </p>
+                        )}
+
+                        {/* GENRES */}
+                        {Array.isArray(movie.genres) && movie.genres.length > 0 && (
+                        <p className="text-xs text-gray-300 mt-1 text-center">
+                            [{movie.genres.join(", ")}]
+                        </p>
+                        )}
+
+                    </div>
+                    </div>
                 </div>
-                </div>
+                
             ))}
             </div>
         </div>
