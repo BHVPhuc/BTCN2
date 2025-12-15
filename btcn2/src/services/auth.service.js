@@ -49,4 +49,18 @@ export const authService = {
 
         return res.json();
     },
+    async getProfile(token) {
+        const res = await fetch(`${API_BASE_URL}/users/profile`, {
+            method: "GET",
+            headers: {
+                ...headers,
+                "Authorization": `Bearer ${token}`
+            },
+        });
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch profile");
+        }
+        return res.json();
+    },
 };

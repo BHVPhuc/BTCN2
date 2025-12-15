@@ -7,6 +7,7 @@ import MovieDetailPage from "../pages/MovieDetailPage";
 import PersonDetailPage from "../pages/PersonDetailPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import ProfilePage from "../pages/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "person/:id",
         element: <PersonDetailPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
     ],
   },
