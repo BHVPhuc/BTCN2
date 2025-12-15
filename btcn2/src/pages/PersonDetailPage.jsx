@@ -34,54 +34,39 @@ export default function PersonDetailPage() {
         <div className="flex-1">
           <h1 className="text-3xl font-bold">{person.name}</h1>
 
-          <p className="mt-1 text-gray-600">
-            {person.role}
-          </p>
+          <p className="mt-1 text-gray-600">{person.role}</p>
 
           <div className="mt-3 text-sm text-gray-500 space-y-1">
             <p>Born: {formatDate(person.birth_date)}</p>
-            {person.death_date && (
-              <p>Died: {formatDate(person.death_date)}</p>
-            )}
+            {person.death_date && <p>Died: {formatDate(person.death_date)}</p>}
             {person.height && <p>Height: {person.height}</p>}
           </div>
 
           {person.awards && (
-            <p className="mt-3 text-sm text-amber-600">
-              🏆 {person.awards}
-            </p>
+            <p className="mt-3 text-sm text-amber-600">🏆 {person.awards}</p>
           )}
 
-          <p className="mt-4 text-sm leading-relaxed">
-            {person.summary}
-          </p>
+          <p className="mt-4 text-sm leading-relaxed">{person.summary}</p>
         </div>
       </div>
 
       {/* KNOWN FOR */}
       {Array.isArray(person.known_for) && (
         <>
-          <h2 className="mt-8 text-xl font-semibold">
-            Known for
-          </h2>
+          <h2 className="mt-8 text-xl font-semibold">Known for</h2>
 
           <div className="grid grid-cols-5 gap-4 mt-4">
-            {person.known_for.map(movie => (
+            {person.known_for.map((movie) => (
               <div
                 key={movie.id}
                 onClick={() => navigate(`/movies/${movie.id}`)}
                 className="cursor-pointer hover:scale-105 transition"
               >
-                <img
-                  src={movie.image}
-                  className="rounded shadow"
-                />
+                <img src={movie.image} className="rounded shadow" />
                 <p className="text-sm font-medium mt-1">
                   {movie.title} ({movie.year})
                 </p>
-                <p className="text-xs text-gray-500">
-                  {movie.role}
-                </p>
+                <p className="text-xs text-gray-500">{movie.role}</p>
                 {movie.character && (
                   <p className="text-xs italic text-gray-400">
                     {movie.character}
