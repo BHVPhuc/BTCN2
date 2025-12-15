@@ -6,15 +6,16 @@ import { set } from "zod";
 
 export default function MainContent() {
     const [popular, setPopular] = useState([]);
+    const [topRated, setTopRated] = useState([]);
 
 
     useEffect(() => {
         const fetchMovies = async () => {
         try {
             const popularData = await movieService.getMostPopular({page: 1, limit: 12});
-            
+            const topRatedData = await movieService.getTopRated({page: 1, limit: 12, category: "IMDB_TOP_50"});
         setPopular(popularData.data || []);
-
+        setTopRated(topRatedData.data || []);
         } catch (error) {
             console.error(error);
         }
