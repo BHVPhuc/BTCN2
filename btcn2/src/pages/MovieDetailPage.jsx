@@ -105,6 +105,24 @@ export default function MovieDetailPage() {
                     <p>{movie.directors?.map((d) => d.name).join(", ")}</p>
                 </div>
             </div>
+
+            {/* REVIEWS */}
+            {Array.isArray(movie.reviews) && movie.reviews.length > 0 && (
+                <div className="md:col-span-3 mt-12">
+                    <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+                    
+                    <div className="space-y-6">
+                        {movie.reviews.map((review, index) => (
+                            <div key={index} className="border-b pb-4">
+                                <p className="font-semibold">{review.author}</p>
+                                <p className="mt-2 text-sm leading-relaxed">
+                                    {review.content}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
