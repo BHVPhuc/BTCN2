@@ -77,4 +77,25 @@ export const movieService = {
     if (!res.ok) throw new Error("Failed to fetch reviews");
     return res.json();
   },
+
+  async addFavorite(movieId, token) {
+    const res = await fetch(`${API_BASE_URL}/users/favorites/${movieId}`, {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Authorization": `Bearer ${token}`
+      },
+    });
+
+    if (!res.ok) {
+      let errorMessage = "Failed to add favorite";
+      try {
+        const errorData = await res.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch (e) { /* ignore */ }
+      throw new Error(errorMessage);
+    }
+
+    return res.json();
+  }
 };
