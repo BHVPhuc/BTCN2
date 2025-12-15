@@ -107,27 +107,27 @@ export default function MovieDetailPage() {
 
     return (
         <div className="max-w-[1200px] mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="relative group">
+            <div className="flex flex-col gap-4">
                 <img
                     src={movie.image}
                     alt={movie.title}
                     className="rounded-xl shadow-lg w-full"
                 />
+
                 <Button
                     onClick={handleToggleFavorite}
                     disabled={addingFavorite}
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full h-10 w-10"
-                    title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                    className={`w-full gap-2 ${isFavorite ? "bg-red-500 hover:bg-red-600 text-white" : ""}`}
+                    variant={isFavorite ? "default" : "outline"}
                 >
                     {addingFavorite ? (
                         <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
                         <Heart
-                            className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`}
+                            className={`h-5 w-5 ${isFavorite ? "fill-white" : ""}`}
                         />
                     )}
+                    {isFavorite ? "Favorited" : "Add to Favorites"}
                 </Button>
             </div>
 
