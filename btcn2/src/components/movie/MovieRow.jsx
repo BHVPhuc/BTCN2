@@ -1,30 +1,90 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useMemo } from "react";
 
-export default function MovieRow({ title }) {
+const ITEMS_PER_PAGE = 3;
+
+export default function MovieRow({ title, movies = [] }) {
+    const [page, setPage] = useState(0);
+
+    const pages = useMemo(() => {
+        const result = [];
+        for (let i = 0; i < movies.length; i += ITEMS_PER_PAGE) {
+        result.push(movies.slice(i, i + ITEMS_PER_PAGE));
+        }
+        return result;
+    }, [movies]);
+
+    if (pages.length === 0) {
+        return <div className="p-4 text-lg font-bold text-[#4b282d] dark:text-white ">" {title} " movies unavailable</div>;
+    }
+
+    const totalPages = pages.length;
+
+    const handlePrev = () => {
+        setPage((p) => (p === 0 ? totalPages - 1 : p - 1));
+    };
+
+    const handleNext = () => {
+        setPage((p) => (p === totalPages - 1 ? 0 : p + 1));
+    };
+
     return (
-        <div className="w-full h-full flex flex-col p-2">
-            <h3 className="text-lg font-bold text-[#4b282d] dark:text-white mb-1">{title}</h3>
+        <div className="w-full flex flex-col p-2 max-w-[1200px]">
+        <h3 className="text-lg font-bold text-[#4b282d] dark:text-white mb-2">
+            {title}
+        </h3>
 
-            <div className="flex-1 flex items-center relative">
-                {/* Left Arrow */}
-                <button className="absolute left-0 z-10 p-1 bg-white/50 rounded-full hover:bg-white/80 shadow-sm cursor-pointer">
-                    <ChevronLeft size={24} className="text-gray-600" />
-                </button>
+        <div className="relative flex items-center">
+            {/* LEFT */}
+            <button
+            onClick={handlePrev}
+            className="absolute left-2 z-20 p-2 bg-white/80 dark:bg-black/60 rounded-full shadow-lg hover:scale-110 transition"
+            >
+            <ChevronLeft size={24} />
+            </button>
 
-                {/* Movie List Placeholder */}
-                <div className="flex-1 flex gap-3 overflow-hidden h-full px-8">
-                    {[1, 2, 3, 4].map((item) => (
-                        <div key={item} className="flex-1 bg-gray-300 rounded-lg shadow-sm flex items-center justify-center text-xs text-gray-500 min-w-0 transition-transform hover:scale-105 cursor-pointer">
-                            Thumbnail {item}
+            {/* VIEWPORT */}
+            <div className="overflow w-full px-12">
+                {/* TRACK */}
+                <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{
+                    width: `${totalPages * 100}%`,
+                    transform: `translateX(-${page * (100 / totalPages)}%)`,
+                    }}
+                >
+                    {pages.map((pageMovies, index) => (
+                        <div
+                            key={index}
+                            className="w-full flex justify-center gap-4"
+                        >
+                            {pageMovies.map((movie) => (
+                                <div
+                                    key={movie.id}
+                                    className="w-[120px] aspect-[2/3] rounded-lg overflow-hidden shadow hover:scale-205 transition"
+                                >
+                                    <img
+                                    src={movie.image}
+                                    alt={movie.title}
+                                    className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
-
-                {/* Right Arrow */}
-                <button className="absolute right-0 z-10 p-1 bg-white/50 rounded-full hover:bg-white/80 shadow-sm cursor-pointer">
-                    <ChevronRight size={24} className="text-gray-600" />
-                </button>
             </div>
+
+            {/* RIGHT */}
+            <button
+            onClick={handleNext}
+            className="absolute right-2 z-20 p-2 bg-white/80 dark:bg-black/60 rounded-full shadow-lg hover:scale-110 transition"
+            >
+            <ChevronRight size={24} />
+            </button>
         </div>
-    )
+
+
+        </div>
+    );
 }
