@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function MovieDetailPage() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
+    const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -14,6 +15,8 @@ export default function MovieDetailPage() {
             try {
                 const res = await movieService.getDetail(id);
                 setMovie(res);
+                const reviewsRes = await movieService.getReviews(id);
+                setReviews(reviewsRes.data || []);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -81,40 +84,41 @@ export default function MovieDetailPage() {
                     className="mt-6 text-sm leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: movie.plot_full }}
                 />
-                <div className="mt-8">
-                    <h3 className="font-semibold mb-3">Cast</h3>
-                    {/* ACTORS */}
-                    <div className="flex gap-4 overflow-x-auto">
-                        {movie.actors?.map((a) => (
-                            <div
-                                key={a.id}
-                                className="w-[120px] cursor-pointer hover:scale-105 transition"
-                                onClick={() => navigate(`/person/${a.id}`)}
-                            >
-                                <img src={a.image} className="rounded-lg" />
-                                <p className="text-xs mt-1">{a.name}</p>
-                                <p className="text-[10px] text-gray-500">{a.character}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            </div>
 
-                {/* DIRECTORS */}
-                <div className="mt-6">
-                    <h3 className="font-semibold mb-1">Director</h3>
-                    <p>{movie.directors?.map((d) => d.name).join(", ")}</p>
+            <div className="mt-8 col-span-3">
+                <h3 className="font-semibold mb-3">Cast</h3>
+                {/* ACTORS */}
+                <div className="flex gap-4 overflow-x-auto overflow-y-hidden">
+                    {movie.actors?.map((a) => (
+                        <div
+                            key={a.id}
+                            className="w-[200px] cursor-pointer rounded-lg transition-transform duration-300 hover:scale-105"
+                            onClick={() => navigate(`/person/${a.id}`)}
+                        >
+                            <img src={a.image} className="rounded-lg" />
+                            <p className="text-xs mt-1">{a.name}</p>
+                            <p className="text-[12px] text-gray-500">{a.character}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
 
+            {/* DIRECTORS */}
+            <div className="mt-6">
+                <h3 className="font-semibold mb-1">Director</h3>
+                <p>{movie.directors?.map((d) => d.name).join(", ")}</p>
+            </div>
+
             {/* REVIEWS */}
-            {Array.isArray(movie.reviews) && movie.reviews.length > 0 && (
+            {reviews.length > 0 && (
                 <div className="md:col-span-3 mt-12">
                     <h2 className="text-2xl font-bold mb-4">Reviews</h2>
                     <div className="space-y-6">
-                        {movie.reviews.map((review, index) => (
+                        {reviews.map((review, index) => (
                             <div key={index} className="border-b pb-4">
                                 <div className="flex gap-4 items-center">
-                                    <p className="font-semibold">User: {review.user}</p>
+                                    <p className="font-semibold">User: {review.username}</p>
                                     <p className="text-sm text-gray-500">
                                         Rating: {review.rate} / 10.0
                                     </p>

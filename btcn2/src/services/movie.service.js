@@ -68,4 +68,13 @@ export const movieService = {
     if (!res.ok) throw new Error("Search movies failed");
     return res.json();
   },
+
+  async getReviews(movieId, { page = 1, limit = 10, sort = "newest" } = {}) {
+    const res = await fetch(
+      `${API_BASE_URL}/movies/${movieId}/reviews?page=${page}&limit=${limit}&sort=${sort}`,
+      { headers }
+    );
+    if (!res.ok) throw new Error("Failed to fetch reviews");
+    return res.json();
+  },
 };
