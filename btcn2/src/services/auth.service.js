@@ -63,4 +63,25 @@ export const authService = {
         }
         return res.json();
     },
+
+    async updateProfile(token, data) {
+        const res = await fetch(`${API_BASE_URL}/users/profile`, {
+            method: "PATCH",
+            headers: {
+                ...headers,
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+            let errorMessage = "Failed to update profile";
+            try {
+                const errorData = await res.json();
+                errorMessage = errorData.message || errorMessage;
+            } catch (e) { /* ignore */ }
+            throw new Error(errorMessage);
+        }
+        return res.json();
+    }
 };
