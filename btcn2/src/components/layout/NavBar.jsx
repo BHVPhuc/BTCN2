@@ -1,4 +1,4 @@
-import { House, LogIn } from "lucide-react";
+import { House } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -28,7 +28,6 @@ export default function NavBar() {
         navigate(`/search?${params.toString()}`);
     };
 
-
     return (
         <div
             className="w-full max-w-[1200px] bg-[#d3e0fc] dark:bg-[#0b1b39] border border-[#c2d4e9] dark:border-[#122d5f] h-15 rounded-[10px] flex
@@ -54,7 +53,7 @@ export default function NavBar() {
                 <input
                     type="text"
                     id="first_name"
-                    className="bg-white dark:bg-background rounded-[10px] border border-default-medium text-heading 
+                    className="bg-white dark:bg-background rounded-[10px] border border-default-medium text-heading
                             text-sm rounded-base focus:border-brand block w-full px-3 py-2 shadow-xs placeholder:text-body mr-3"
                     placeholder="Search"
                     onChange={(e) => setKeyword(e.target.value)}
@@ -67,13 +66,6 @@ export default function NavBar() {
                 >
                     Search
                 </button>
-                <div
-                    className="ml-4 flex items-center cursor-pointer hover:scale-110 transition"
-                    onClick={() => navigate("/login")}
-                    title="Login"
-                >
-                    <LogIn className="dark:text-white" />
-                </div>
             </div>
         </div>
     );
