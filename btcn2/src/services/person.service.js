@@ -15,5 +15,5 @@ export const personService = {
     }
 
     return res.json();
-  },
+  }
 };

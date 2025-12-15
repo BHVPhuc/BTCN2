@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import MainContent from "@/components/main/MainContent";
 import SearchPage from "../pages/SearchPage";
 import MovieDetailPage from "../pages/MovieDetailPage";
+import PersonDetailPage from "../pages/PersonDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       {
-        index: true,          // tương đương path: "/"
+        index: true,          // path: "/"
         element: <MainContent />,
       },
       {
@@ -23,14 +24,10 @@ export const router = createBrowserRouter([
         path: "search",
         element: <SearchPage />,
       },
-    //   {
-    //     path: "movies",
-    //     element: <Movies />,
-    //   },
-    //   {
-    //     path: "movies/:id",
-    //     element: <MovieDetail />,
-    //   },
+      {
+        path: "person/:id",
+        element: <PersonDetailPage />,
+      },
     ],
   },
 //   {
