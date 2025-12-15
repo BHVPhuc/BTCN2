@@ -2,50 +2,66 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 export default function FeaturedMovie({ movies = [] }) {
-    const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
-    if (!Array.isArray(movies) || movies.length === 0) {
-        return null;
-    }
+  if (!movies.length) return null;
 
-    const movie = movies[index];
+  const handlePrev = () => {
+    setIndex((i) => (i === 0 ? movies.length - 1 : i - 1));
+  };
 
-    const handlePrev = () => {
-        setIndex((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
-    };
+  const handleNext = () => {
+    setIndex((i) => (i === movies.length - 1 ? 0 : i + 1));
+  };
 
-    const handleNext = () => {
-        setIndex((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
-    };
+  return (
+    <div className="relative w-full h-full flex items-center max-w-[1200px]">
 
-    return (
-        <div className="relative max-w-full h-full flex items-center justify-between px-4">
-            {/* Left Arrow */}
-            <button
-                onClick={handlePrev}
-                className="p-2 rounded-full transition-colors cursor-pointer"
+        {/* LEFT ARROW */}
+        <button
+            onClick={handlePrev}
+            className="absolute left-4 z-20 p-3 bg-white/80 dark:bg-black/60
+                    rounded-full shadow hover:scale-110 transition"
+        >
+            <ChevronLeft size={36} />
+        </button>
+
+        {/* VIEWPORT */}
+        <div className="w-full h-full overflow-hidden">
+
+            {/* TRACK */}
+            <div
+            className="flex h-full transition-transform duration-700 ease-in-out"
+            style={{
+                width: `${movies.length * 100}%`,
+                transform: `translateX(-${index * (100 / movies.length)}%)`,
+            }}
             >
-                <ChevronLeft size={48} className="text-gray-400 hover:text-gray-800" />
-            </button>
-
-        {/* Content */}
-        <div className="flex-1 h-full flex items-center justify-center">
-            <div className="h-[85%] aspect-2/3 rounded-lg shadow-md overflow-hidden transition-all">
-            <img
-                src={movie.image}
-                alt={movie.title}
-                className="w-full h-full object-cover"
-            />
+            {movies.map((movie) => (
+                <div
+                key={movie.id}
+                className="w-full h-full flex items-center justify-center"
+                >
+                <div className="h-[85%] w-[500px] aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
+                    <img
+                    src={movie.image}
+                    alt={movie.title}
+                    className="w-full h-full object-cover"
+                    />
+                </div>
+                </div>
+            ))}
             </div>
         </div>
 
-        {/* Right Arrow */}
+        {/* RIGHT ARROW */}
         <button
             onClick={handleNext}
-            className="p-2 rounded-full transition-colors cursor-pointer"
+            className="absolute right-4 z-20 p-3 bg-white/80 dark:bg-black/60
+                    rounded-full shadow hover:scale-110 transition"
         >
-            <ChevronRight size={48} className="text-gray-400 hover:text-gray-800" />
+            <ChevronRight size={36} />
         </button>
-        </div>
-    );
+    </div>
+  );
 }
