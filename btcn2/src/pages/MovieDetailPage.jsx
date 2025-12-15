@@ -115,19 +115,34 @@ export default function MovieDetailPage() {
                 />
             </div>
 
-            <div className="mt-8 col-span-3">
-                <h3 className="font-semibold mb-3">Cast</h3>
+            <div className="mt-10 col-span-3">
+                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    Cast <span className="text-sm font-normal text-gray-500">({movie.actors?.length || 0})</span>
+                </h3>
                 {/* ACTORS */}
-                <div className="flex gap-4 overflow-x-auto overflow-y-hidden">
+                <div className="flex gap-5 overflow-x-auto pb-6 pt-2 px-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
                     {movie.actors?.map((a) => (
                         <div
                             key={a.id}
-                            className="w-[200px] cursor-pointer rounded-lg transition-transform duration-300 hover:scale-105"
+                            className="min-w-[160px] w-[160px] cursor-pointer rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                             onClick={() => navigate(`/person/${a.id}`)}
                         >
-                            <img src={a.image} className="rounded-lg" />
-                            <p className="text-xs mt-1">{a.name}</p>
-                            <p className="text-[12px] text-gray-500">{a.character}</p>
+                            <div className="h-[240px] w-full overflow-hidden rounded-t-xl bg-gray-100">
+                                <img
+                                    src={a.image}
+                                    alt={a.name}
+                                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div className="p-3">
+                                <p className="font-bold text-sm text-gray-900 dark:text-white line-clamp-1" title={a.name}>
+                                    {a.name}
+                                </p>
+                                <p className="text-xs text-gray-500 mt-1 line-clamp-2 min-h-[2rem]" title={a.character}>
+                                    {a.character}
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>
