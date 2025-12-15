@@ -84,7 +84,7 @@ export default function MovieRow({ title, movies = [] }) {
                                                 p-2 rounded-lg"
                                     >
                                     {/* IMAGE */}
-                                    <div className="w-full aspect-square rounded-lg overflow-hidden shadow">
+                                    <div className="w-full aspect-[2/3] rounded-lg overflow-hidden shadow">
                                         <img
                                         src={movie.image}
                                         alt={movie.title}

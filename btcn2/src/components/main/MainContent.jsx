@@ -66,7 +66,7 @@ export default function MainContent() {
       <div className="row-span-1">
         <MovieRow title="Most Popular" movies={popular} />
       </div>
-      <div className="row-span-1">
+      <div className="row-span-1 pb-20">
         <MovieRow title="Top Rating" movies={topRated} />
       </div>
     </div>

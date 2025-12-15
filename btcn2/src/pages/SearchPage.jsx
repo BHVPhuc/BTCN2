@@ -20,8 +20,7 @@ export default function SearchPage() {
   const title = params.get("title");
   const person = params.get("person");
   const page = Number(params.get("page")) || 1;
-  const type = q ? "all" : title ? "title" : person ? "person" : "all";
-
+  
   const currentSearchParam = q
   ? { q }
   : title
