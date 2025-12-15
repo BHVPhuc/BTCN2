@@ -71,35 +71,35 @@ export default function MovieRow({ title, movies = [] }) {
                                 className="w-full flex justify-center gap-4"
                             >
                                 {pageMovies.map((movie) => (
-<div
-  key={movie.id}
-  className="group w-[200px] flex flex-col items-center
-             transition-transform duration-300
-             hover:scale-150"
->
-  {/* IMAGE */}
-  <div className="w-full aspect-square rounded-lg overflow-hidden shadow">
-    <img
-      src={movie.image}
-      alt={movie.title}
-      className="w-full h-full object-fit"
-    />
-  </div>
+                                    <div
+                                    key={movie.id}
+                                    className="group w-[200px] flex flex-col items-center
+                                                transition-transform duration-300
+                                                hover:scale-150
+                                                hover:bg-gray-600
+                                                p-2 rounded-lg"
+                                    >
+                                    {/* IMAGE */}
+                                    <div className="w-full aspect-square rounded-lg overflow-hidden shadow">
+                                        <img
+                                        src={movie.image}
+                                        alt={movie.title}
+                                        className="w-full h-full object-fit"
+                                        />
+                                    </div>
 
-  {/* TITLE */}
-  <p
-    className="mt-2 text-sm text-center font-medium
-               text-[#4b282d] dark:text-white
-               opacity-0 group-hover:opacity-100
-               translate-y-2 group-hover:translate-y-0
-               transition-all duration-300
-               line-clamp-2"
-  >
-    {movie.title}
-  </p>
-</div>
-
-
+                                    {/* TITLE */}
+                                    <p
+                                        className="mt-2 text-sm text-center font-medium
+                                                text-white
+                                                opacity-0 group-hover:opacity-100
+                                                translate-y-2 group-hover:translate-y-0
+                                                transition-all duration-300
+                                                line-clamp-2"
+                                    >
+                                        {movie.title}
+                                    </p>
+                                    </div>
                                 ))}
                             </div>
                         ))}
