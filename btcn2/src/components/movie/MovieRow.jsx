@@ -73,12 +73,12 @@ export default function MovieRow({ title, movies = [] }) {
                             {pageMovies.map((movie) => (
                                 <div
                                     key={movie.id}
-                                    className="w-[120px] aspect-[2/3] rounded-lg overflow-hidden shadow hover:scale-205 transition"
+                                    className="w-[200px] aspect-[3/2] rounded-lg overflow-hidden shadow hover:scale-205 transition"
                                 >
                                     <img
                                     src={movie.image}
                                     alt={movie.title}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-fit"
                                     />
                                 </div>
                             ))}
