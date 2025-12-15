@@ -39,7 +39,7 @@ export default function MovieRow({ title, movies = [] }) {
                 {pages.map((_, i) => (
                 <span
                     key={i}
-                    className={`w-6 h-1.5 rounded ${
+                    className={`w-6 h-1 rounded ${
                     i === page ? "bg-red-500" : "bg-gray-300"
                     }`}
                 />

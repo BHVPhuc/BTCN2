@@ -1,8 +1,12 @@
 import { Star } from 'lucide-react';
+import { useNavigate } from "react-router-dom"; 
 
 export default function MovieCard({ movie }) {
+  const navigate = useNavigate(); 
   return (
-    <div className="bg-white dark:bg-[#0b1b39] rounded-xl overflow-hidden shadow
+    <div 
+    onClick={() => navigate(`/movies/${movie.id}`)}
+    className="bg-white dark:bg-[#0b1b39] rounded-xl overflow-hidden shadow
                     hover:scale-[1.03] transition cursor-pointer">
 
       {/* POSTER */}
