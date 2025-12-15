@@ -19,16 +19,12 @@ export function AuthProvider({ children }) {
     });
 
     const login = async (username, password) => {
-        try {
-            const res = await authService.login(username, password);
-            setUser(res.user);
-            setToken(res.token);
-            localStorage.setItem("user", JSON.stringify(res.user));
-            localStorage.setItem("token", res.token);
-            return res;
-        } catch (error) {
-            throw error;
-        }
+        const res = await authService.login(username, password);
+        setUser(res.user);
+        setToken(res.token);
+        localStorage.setItem("user", JSON.stringify(res.user));
+        localStorage.setItem("token", res.token);
+        return res;
     };
 
     const logout = () => {
