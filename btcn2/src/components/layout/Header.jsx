@@ -74,8 +74,11 @@ export default function Header() {
                                     >
                                         Profile
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem disabled>
-                                        Settings
+                                    <DropdownMenuItem
+                                        className="cursor-pointer"
+                                        onClick={() => navigate("/favorites")}
+                                    >
+                                        Favorites
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
