@@ -10,6 +10,9 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
+import { Heart, Loader2 } from "lucide-react";
 
 export default function MovieDetailPage() {
     const { id } = useParams();
@@ -20,7 +23,27 @@ export default function MovieDetailPage() {
         total_pages: 1,
     });
     const [loading, setLoading] = useState(true);
+    const [addingFavorite, setAddingFavorite] = useState(false);
     const navigate = useNavigate();
+    const { isAuthenticated, token } = useAuth();
+
+    const handleAddToFavorites = async () => {
+        if (!isAuthenticated) {
+            navigate("/login");
+            return;
+        }
+        if (!token) return;
+        setAddingFavorite(true);
+        try {
+            await movieService.addFavorite(id, token);
+            alert("Movie added to favorites!");
+        } catch (error) {
+            console.error("Failed to add favorite", error);
+            alert(error.message);
+        } finally {
+            setAddingFavorite(false);
+        }
+    };
 
     const fetchReviews = async (page) => {
         try {
@@ -61,12 +84,22 @@ export default function MovieDetailPage() {
 
     return (
         <div className="max-w-[1200px] mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
+            <div className="relative group">
                 <img
                     src={movie.image}
                     alt={movie.title}
-                    className="rounded-xl shadow-lg"
+                    className="rounded-xl shadow-lg w-full"
                 />
+                <Button
+                    onClick={handleAddToFavorites}
+                    disabled={addingFavorite}
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full h-10 w-10"
+                    title="Add to Favorites"
+                >
+                    {addingFavorite ? <Loader2 className="h-5 w-5 animate-spin" /> : <Heart className="h-5 w-5" />}
+                </Button>
             </div>
 
             {/* INFO */}
@@ -109,10 +142,7 @@ export default function MovieDetailPage() {
                 ) : (
                     <p className="mt-6 text-sm leading-relaxed">No plot available</p>
                 )}
-                <div
-                    className="mt-6 text-sm leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: movie.plot_full }}
-                />
+
             </div>
 
             <div className="mt-10 col-span-3">
