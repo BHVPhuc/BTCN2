@@ -110,11 +110,16 @@ export default function MovieDetailPage() {
             {Array.isArray(movie.reviews) && movie.reviews.length > 0 && (
                 <div className="md:col-span-3 mt-12">
                     <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-                    
                     <div className="space-y-6">
                         {movie.reviews.map((review, index) => (
                             <div key={index} className="border-b pb-4">
-                                <p className="font-semibold">{review.author}</p>
+                                <div className="flex gap-4 items-center">
+                                    <p className="font-semibold">User: {review.user}</p>
+                                    <p className="text-sm text-gray-500">
+                                        Rating: {review.rate} / 10.0
+                                    </p>
+                                </div>
+                                <p className="text-sm italic text-semibold">Title: {review.title}</p>
                                 <p className="mt-2 text-sm leading-relaxed">
                                     {review.content}
                                 </p>
