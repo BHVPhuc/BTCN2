@@ -34,6 +34,18 @@ export default function MovieRow({ title, movies = [] }) {
             {title}
         </h3>
 
+        {/* SLIDE BAR */}
+        <div className="flex justify-center gap-2 mt-2 mb-1">
+            {pages.map((_, i) => (
+            <span
+                key={i}
+                className={`w-6 h-1.5 rounded ${
+                i === page ? "bg-red-500" : "bg-gray-300"
+                }`}
+            />
+            ))}
+        </div>
+
         <div className="relative flex items-center">
             {/* LEFT */}
             <button
