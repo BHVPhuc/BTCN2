@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
-import { authService } from "@/services/auth.service";
+// import { authService } from "@/services/auth.service"; // Removed as we use context now
+import { useAuth } from "@/context/AuthContext";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,7 @@ const loginSchema = z.object({
 });
 
 export default function LoginPage() {
+    const { login } = useAuth();
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -40,9 +42,7 @@ export default function LoginPage() {
         setLoading(true);
         setError("");
         try {
-            const res = await authService.login(data.username, data.password);
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("user", JSON.stringify(res.user));
+            await login(data.username, data.password);
             navigate("/");
         } catch (err) {
             setError(err.message);
