@@ -54,11 +54,9 @@ export default function MovieDetailPage() {
             if (isFavorite) {
                 await movieService.removeFavorite(id, token);
                 setIsFavorite(false);
-                // alert("Movie removed from favorites");
             } else {
                 await movieService.addFavorite(id, token);
                 setIsFavorite(true);
-                // alert("Movie added to favorites!");
             }
         } catch (error) {
             console.error("Failed to update favorite", error);
