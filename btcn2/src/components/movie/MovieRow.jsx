@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 3;
 
 export default function MovieRow({ title, movies = [] }) {
     const [page, setPage] = useState(0);
+    const navigate = useNavigate();
 
     const pages = useMemo(() => {
         const result = [];
@@ -72,9 +74,11 @@ export default function MovieRow({ title, movies = [] }) {
                             >
                                 {pageMovies.map((movie) => (
                                     <div
+                                    onClick={() => navigate(`/movies/${movie.id}`)}
                                     key={movie.id}
                                     className="group w-[200px] flex flex-col items-center
                                                 transition-transform duration-300
+                                                cursor-pointer
                                                 hover:scale-150
                                                 hover:bg-gray-600
                                                 p-2 rounded-lg"

@@ -15,7 +15,7 @@ export default function NavBar() {
         <div className="w-full max-w-[1200px] bg-[#d3e0fc] dark:bg-[#0b1b39] border border-[#c2d4e9] dark:border-[#122d5f] h-15 rounded-[10px] flex
             items-center justify-between px-6 my-1">
             <div
-                className="cursor-pointer"
+                className="cursor-pointer hover:scale-110 transition"
                 onClick={() => navigate("/")}
             >
                 <House className="dark:text-white" />

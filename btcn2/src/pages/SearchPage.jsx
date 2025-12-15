@@ -55,6 +55,8 @@ export default function SearchPage() {
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
+
+        
         {/* PAGINATION */}
         <Pagination className="mt-8">
           <PaginationContent>
