@@ -28,4 +28,25 @@ export const authService = {
 
         return res.json();
     },
+
+    async register(data) {
+        const res = await fetch(`${API_BASE_URL}/users/register`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(data),
+        });
+
+        if (!res.ok) {
+            let errorMessage = "Registration failed";
+            try {
+                const errorData = await res.json();
+                errorMessage = errorData.message || errorMessage;
+            } catch (e) {
+                // ignore
+            }
+            throw new Error(errorMessage);
+        }
+
+        return res.json();
+    },
 };
