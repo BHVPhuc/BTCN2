@@ -27,11 +27,11 @@ export default function FeaturedMovie({ movies = [] }) {
         </button>
 
         {/* SLIDE BAR */}
-        <div className="flex justify-center gap-2 mt-2 mb-1 absolute top-180 z-50 left-1/2 transform -translate-x-1/2">
+        <div className="flex justify-center gap-2 mt-2 mb-1 absolute top-169 z-50 left-1/2 transform -translate-x-1/2 opacity-50">
         {movies.map((_, i) => (
             <span
             key={i}
-            className={`w-6 h-1.5 rounded ${i === index ? "bg-red-500" : "bg-gray-300"}`}
+            className={`w-6 h-1 rounded ${i === index ? "bg-red-500" : "bg-gray-300"}`}
             />
         ))}
         </div>
