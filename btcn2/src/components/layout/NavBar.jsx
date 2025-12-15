@@ -1,4 +1,4 @@
-import { House } from "lucide-react";
+import { House, LogIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -8,24 +8,24 @@ export default function NavBar() {
     const [type, setType] = useState("all"); // all | title | person
 
     const handleSearch = () => {
-    if (!keyword.trim()) return;
+        if (!keyword.trim()) return;
 
-    const params = new URLSearchParams();
-    params.set("page", "1");
+        const params = new URLSearchParams();
+        params.set("page", "1");
 
-    if (type === "all") {
-        params.set("q", keyword);
-    }
+        if (type === "all") {
+            params.set("q", keyword);
+        }
 
-    if (type === "title") {
-        params.set("title", keyword);
-    }
+        if (type === "title") {
+            params.set("title", keyword);
+        }
 
-    if (type === "person") {
-        params.set("person", keyword);
-    }
+        if (type === "person") {
+            params.set("person", keyword);
+        }
 
-    navigate(`/search?${params.toString()}`);
+        navigate(`/search?${params.toString()}`);
     };
 
 
@@ -67,6 +67,13 @@ export default function NavBar() {
                 >
                     Search
                 </button>
+                <div
+                    className="ml-4 flex items-center cursor-pointer hover:scale-110 transition"
+                    onClick={() => navigate("/login")}
+                    title="Login"
+                >
+                    <LogIn className="dark:text-white" />
+                </div>
             </div>
         </div>
     );
