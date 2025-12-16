@@ -42,61 +42,68 @@ export default function Header() {
                         {darkMode ? <Moon color="#d29090" /> : <Sun color="#4b282d" />}
                     </div>
 
-                    {user ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden border border-gray-200 dark:border-gray-700">
-                                    <Avatar className="h-full w-full">
-                                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-500 text-white font-semibold">
-                                            {user.username
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="relative h-10 w-auto flex items-center gap-2 rounded-full p-1 pr-3 border border-gray-200 dark:border-gray-700 hover:bg-transparent">
+                                <Avatar className="h-8 w-8">
+                                    <AvatarFallback className={`${user ? "bg-gradient-to-br from-blue-500 to-purple-500 text-white" : "bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300"} font-semibold`}>
+                                        {user ? (
+                                            user.username
                                                 ?.split(' ')
                                                 .map((p) => p[0])
                                                 .join('')
                                                 .slice(0, 2)
                                                 .toUpperCase() || "U"
-                                            }
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end">
-                                <DropdownMenuLabel className="font-normal">
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium leading-none">{user.username}</p>
-                                        <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                                    </div>
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem
-                                        className="cursor-pointer"
-                                        onClick={() => navigate("/profile")}
-                                    >
-                                        Profile
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem
-                                        className="cursor-pointer"
-                                        onClick={() => navigate("/favorites")}
-                                    >
-                                        Favorites
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
+                                        ) : (
+                                            <User size={16} />
+                                        )}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="text-sm font-medium text-[#4b282d] dark:text-[#d29090]">
+                                    {user ? user.username : "Guest"}
+                                </span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56" align="end">
+                            <DropdownMenuLabel className="font-normal">
+                                <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">{user ? user.username : "Guest User"}</p>
+                                    <p className="text-xs leading-none text-muted-foreground">{user ? user.email : "Sign in to access features"}</p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem
+                                    className="cursor-pointer"
+                                    onClick={() => navigate(user ? "/profile" : "/login")}
+                                >
+                                    Profile
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="cursor-pointer"
+                                    onClick={() => navigate(user ? "/favorites" : "/login")}
+                                >
+                                    Favorites
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            {user ? (
                                 <DropdownMenuItem
                                     className="text-red-600 focus:text-red-600 cursor-pointer"
                                     onClick={logout}
                                 >
                                     Log out
                                 </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : (
-                        <Avatar className="h-10 w-10 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate("/login")}>
-                            <AvatarFallback className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                                <User size={20} />
-                            </AvatarFallback>
-                        </Avatar>
-                    )}
+                            ) : (
+                                <DropdownMenuItem
+                                    className="cursor-pointer"
+                                    onClick={() => navigate("/login")}
+                                >
+                                    Log in
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
         </div>
